@@ -195,3 +195,6 @@ input:focus { border-color: var(--teal); background: rgba(255, 255, 255, 0.14); 
 .ticket-actions .btn-glass { flex: 1; }
 .ticket-actions { width: min(100%, 360px); }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+.card.pad > * + * { margin-top: 14px; }
+.card.pad .btn { margin-top: 20px; }
