@@ -32,7 +32,7 @@ export async function GET(req, { params }) {
   const qr = await QRCode.toDataURL(`${origin}/t/${t.id}`, { margin: 1, width: 560, errorCorrectionLevel: "M" });
   const paid = t.created_at ? new Date(t.created_at) : null;
   const paidLabel = paid && !isNaN(paid) ? paid.toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Lagos" }) : "";
-  const channel = t.channel === "online" ? "Paystack" : t.channel || "";
+  const channel = t.channel === "online" ? "Paystack" : t.channel === "cash" ? "Cash" : t.channel || "";
 
   const k = { fontSize: 22, letterSpacing: 3, color: "#7a8a96", textTransform: "uppercase" };
   const v = { fontSize: 32, fontWeight: 700, color: "#062a44", marginTop: 4 };
