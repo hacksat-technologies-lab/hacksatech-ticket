@@ -1,4 +1,4 @@
-import { EVENT, HERO_SLIDES, HERO_INTERVAL, PILLARS, STATS, GALLERY } from "@/lib/event";
+import { EVENT, HERO_SLIDES, HERO_INTERVAL, PILLARS, STATS, GALLERY, TIERS } from "@/lib/event";
 import Checkout from "./Checkout";
 import HeroSlides from "./HeroSlides";
 import Countdown from "./Countdown";
@@ -44,6 +44,11 @@ export default function Home() {
             <a className="btn" href="#tickets">Get your ticket</a>
             <a className="btn-ghost" href="#about">Learn more</a>
           </div>
+          <a className="stubs" href="#tickets" aria-label="See ticket prices">
+            {TIERS.map((t, n) => (
+              <span key={t.id} className={`stub s${n + 1}`}><i>{t.price / 1000}K</i><span>{t.short}</span></span>
+            ))}
+          </a>
           <Countdown to={EVENT.startsAt} />
         </div>
       </section>
