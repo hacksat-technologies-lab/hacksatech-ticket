@@ -41,22 +41,25 @@ export default function Checkout() {
 
   return (
     <>
-      <div className="tiers">
+      <div className="tkts">
         {TIERS.map((x) => (
-          <button key={x.id} className="glass tier" style={{ "--tc": x.color }} onClick={() => EVENT.salesOpen && setTier(x.id)}>
-            <span className="tier-img">
-              <img src={`${x.image}-640.webp`} srcSet={`${x.image}-400.webp 400w, ${x.image}-640.webp 640w`} sizes="(min-width: 760px) 340px, 100vw" alt="" loading="lazy" decoding="async" width="640" height="480" />
-              <span className="tier-tag">{x.short}</span>
-            </span>
-            <span className="tier-body">
-              <span className="tier-main">
-                <b>{x.name}</b>
-                <small>{x.blurb}</small>
+          <button key={x.id} className={`tkt tkt-${x.id}`} style={{ "--tc": x.color }} onClick={() => EVENT.salesOpen && setTier(x.id)} aria-label={`${x.name}, ${naira(x.price)}. Get this ticket`}>
+            <span className="tkt-body">
+              <span className="tkt-main">
+                <i className="tkt-emblem" aria-hidden="true" />
+                <span className="tkt-top"><span>{EVENT.name} {EVENT.year}</span><span>Admit one</span></span>
+                <b className="tkt-name">{x.short}</b>
+                <small className="tkt-blurb">{x.blurb}</small>
+                <span className="tkt-meta">
+                  <span><small>Date</small>{EVENT.dateShort}</span>
+                  <span><small>Doors</small>{EVENT.timeLabel}</span>
+                  <span><small>City</small>Yola</span>
+                </span>
               </span>
-              <span className="tier-foot">
-                <span className="tier-price">{naira(x.price)}</span>
-                <span className="tier-go">Select
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+              <span className="tkt-stub">
+                <span className="tkt-price">{naira(x.price)}</span>
+                <span className="tkt-go">Get ticket
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </span>
               </span>
             </span>

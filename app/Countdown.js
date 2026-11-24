@@ -14,9 +14,9 @@ export default function Countdown({ to }) {
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
   }, []);
-  if (now !== null && now >= target) return <div className="glass countdown live">It’s happening today. See you there!</div>;
+  if (now !== null && now >= target) return <div className="countdown live">It’s happening today. See you there!</div>;
   return (
-    <div className="glass countdown" role="timer" aria-label="Time until Hacksat Connect starts">
+    <div className="countdown" role="timer" aria-label="Time until Hacksat Connect starts">
       {parts(now === null ? 0 : target - now).map(([l, v]) => (
         <div key={l}><b>{now === null ? "--" : String(v).padStart(2, "0")}</b><span>{l}</span></div>
       ))}
