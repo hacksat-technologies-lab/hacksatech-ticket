@@ -39,6 +39,9 @@ export default async function TicketPage({ params }) {
         </div>
       </div>
 
+      <a className="btn ticket-dl" href={`/t/${t.id}/image?download`} download={`hacksat-connect-${t.id}.png`}>
+        Download ticket &amp; receipt
+      </a>
       <div className="ticket-actions">
         <a className="glass btn-glass" href={EVENT.mapsUrl} target="_blank" rel="noopener">Get directions</a>
         <CopyLink />

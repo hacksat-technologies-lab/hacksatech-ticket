@@ -29,7 +29,8 @@ export async function POST(req) {
       amount: tier.price * 100, // price always comes from the server
       reference,
       callback_url: `${siteUrl(req)}/success`,
-      metadata: { tier: tier.id, name, phone, email, school: tier.needsSchool ? school : "" },
+      // "source" lets the shared Academy webhook recognise and forward ticket payments
+      metadata: { source: "hacksat-ticket", tier: tier.id, name, phone, email, school: tier.needsSchool ? school : "" },
     }),
   });
   const json = await res.json();

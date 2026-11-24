@@ -198,3 +198,5 @@ input:focus { border-color: var(--teal); background: rgba(255, 255, 255, 0.14); 
 
 .card.pad > * + * { margin-top: 14px; }
 .card.pad .btn { margin-top: 20px; }
+
+.ticket-dl { width: min(100%, 360px); }

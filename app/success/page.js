@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { findTicket } from "@/lib/sheets";
 import { issueTicket, siteUrl } from "@/lib/tickets";
 import { headers } from "next/headers";
 
@@ -12,14 +11,11 @@ export default async function Success({ searchParams }) {
 
   let ticket = null;
   try {
-    ticket = await findTicket("reference", reference);
-    if (!ticket) {
-      // give the webhook a moment, then issue it ourselves (idempotent)
-      await new Promise((r) => setTimeout(r, 2500));
-      const h = await headers();
-      const origin = process.env.SITE_URL || `https://${h.get("host")}`;
-      ticket = await issueTicket(reference, origin.startsWith("http") ? origin : siteUrl());
-    }
+    // issueTicket returns the existing ticket if the webhook already saved it, otherwise
+    // verifies with Paystack and saves it now. The Sheet script dedupes, so no waiting needed.
+    const h = await headers();
+    const origin = process.env.SITE_URL || `https://${h.get("host")}`;
+    ticket = await issueTicket(reference, origin.startsWith("http") ? origin : siteUrl());
   } catch (e) {
     console.error(e);
   }
