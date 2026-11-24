@@ -15,6 +15,9 @@ const loadFonts = async () =>
       data: await readFile(path.join(process.cwd(), "assets/fonts", `Poppins-${w}.ttf`)),
     }))
   ));
+let logo;
+const loadLogo = async () =>
+  (logo ||= "data:image/png;base64," + (await readFile(path.join(process.cwd(), "assets/brand/logo-white.png"))).toString("base64"));
 // Image fonts have no ₦ glyph, so the image spells out the currency.
 const ngn = (n) => "NGN " + Number(n).toLocaleString("en-NG");
 
@@ -38,13 +41,13 @@ export async function GET(req, { params }) {
   const img = new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(160deg, #0a3d63 0%, #062a44 55%, #2a1a6e 100%)", fontFamily: "Poppins" }}>
-        <div style={{ width: 920, display: "flex", flexDirection: "column", borderRadius: 48, overflow: "hidden", background: "#fff" }}>
+        <div style={{ width: 920, display: "flex", flexDirection: "column", borderRadius: 8, overflow: "hidden", background: "#fff" }}>
           <div style={{ display: "flex", flexDirection: "column", padding: "48px 56px", color: "#fff", background: `linear-gradient(150deg, ${tier.color}, #062a44)` }}>
-            <div style={{ fontSize: 24, letterSpacing: 8, opacity: 0.9 }}>HACKSAT</div>
+            <img src={await loadLogo()} width={88} height={80} />
             <div style={{ fontSize: 72, fontWeight: 800, lineHeight: 1.05, marginTop: 6 }}>{`${EVENT.name} ${EVENT.year}`}</div>
             <div style={{ display: "flex", gap: 16, marginTop: 22, fontSize: 26 }}>
-              <div style={{ display: "flex", background: "rgba(255,255,255,0.2)", padding: "6px 20px", borderRadius: 99 }}>{EVENT.dateLabel}</div>
-              <div style={{ display: "flex", background: "rgba(255,255,255,0.2)", padding: "6px 20px", borderRadius: 99 }}>{EVENT.timeLabel}</div>
+              <div style={{ display: "flex", background: "rgba(255,255,255,0.2)", padding: "6px 20px", borderRadius: 8 }}>{EVENT.dateLabel}</div>
+              <div style={{ display: "flex", background: "rgba(255,255,255,0.2)", padding: "6px 20px", borderRadius: 8 }}>{EVENT.timeLabel}</div>
             </div>
           </div>
 

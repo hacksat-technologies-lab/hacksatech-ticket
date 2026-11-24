@@ -17,7 +17,7 @@ export default async function TicketPage({ params }) {
     <main className="wrap center ticket-page">
       <div className="ticket" style={{ "--tc": tier.color }}>
         <div className="ticket-top">
-          <div className="eyebrow">HACKSAT</div>
+          <img className="ticket-logo" src="/logo-white.png" alt="Hacksat" width="122" height="112" />
           <div className="ticket-title">{EVENT.name} <span>{EVENT.year}</span></div>
           <div className="ticket-meta">
             <span>{EVENT.dateLabel.replace("Saturday, ", "")}</span><span>{EVENT.timeLabel}</span>

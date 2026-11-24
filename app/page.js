@@ -1,5 +1,6 @@
-import { EVENT, HERO_IMAGE, PILLARS, STATS, GALLERY } from "@/lib/event";
+import { EVENT, HERO_SLIDES, HERO_INTERVAL, PILLARS, STATS, GALLERY } from "@/lib/event";
 import Checkout from "./Checkout";
+import HeroSlides from "./HeroSlides";
 import Countdown from "./Countdown";
 
 const faqs = [
@@ -25,7 +26,7 @@ export default function Home() {
   return (
     <main className="wrap wide">
       <header className="glass nav">
-        <a className="logo" href={EVENT.site}>HACKSAT<b>.</b></a>
+        <a className="logo" href={EVENT.site} aria-label="Hacksat home"><img src="/logo-white.png" alt="Hacksat" width="122" height="112" /></a>
         <nav className="nav-links">
           <a href="#about">About</a>
           <a href="#venue">Venue</a>
@@ -34,9 +35,7 @@ export default function Home() {
       </header>
 
       <section className="hero">
-        <div className="hero-media" aria-hidden="true">
-          <img src={HERO_IMAGE.src} alt="" fetchPriority="high" width="800" height="531" />
-        </div>
+        <HeroSlides slides={HERO_SLIDES} interval={HERO_INTERVAL} />
         <div className="hero-body">
           <div className="chip"><span className="live-dot" />{EVENT.dateShort} {EVENT.year} · {EVENT.city}</div>
           <h1>Hacksat<br /><span>Connect</span> <em>2026</em></h1>
@@ -122,7 +121,7 @@ export default function Home() {
 
       <footer className="foot">
         <div className="glass foot-card">
-          <a className="logo" href={EVENT.site}>HACKSAT<b>.</b></a>
+          <a className="logo big" href={EVENT.site} aria-label="Hacksat home"><img src="/logo-white.png" alt="Hacksat" width="122" height="112" loading="lazy" /></a>
           <p className="muted small">Innovating technology across Africa.</p>
           <div className="socials">
             {EVENT.socials.map(([n, u]) => <a key={n} href={u} target="_blank" rel="noopener">{n}</a>)}
