@@ -6,6 +6,8 @@
  *   3. Deploy > New deployment > Web app > Execute as: Me, Who has access: Anyone
  *      Copy the Web app URL into SHEET_SCRIPT_URL, and the SECRET into SHEET_SCRIPT_SECRET.
  * Requests without the right secret are rejected.
+ * After pasting a newer copy of this file: Deploy > Manage deployments > edit (pencil) >
+ * Version: New version > Deploy. The URL stays the same.
  */
 const COLS = ["id", "reference", "tier", "name", "phone", "email", "school", "amount", "channel", "status", "emailed", "created_at"];
 
@@ -63,6 +65,33 @@ function doPost(e) {
     if (b.action === "markEmailed") {
       const idx = rows.findIndex(function (r) { return norm_(r.id) === norm_(b.id); });
       if (idx >= 0) sheet_().getRange(idx + 2, COLS.indexOf("emailed") + 1).setValue("yes");
+      return out_({ ok: true });
+    }
+
+    // Up to 10 tickets whose id, email or phone matches (used by the /desk resend tool)
+    if (b.action === "search") {
+      const q = norm_(b.q);
+      const digits = String(b.q).replace(/\D/g, "");
+      const hits = rows.filter(function (r) {
+        return norm_(r.id) === q || norm_(r.email) === q ||
+          (digits.length >= 10 && String(r.phone).replace(/\D/g, "").slice(-10) === digits.slice(-10));
+      });
+      return out_({ tickets: hits.slice(0, 10) });
+    }
+
+    // Tickets with an email address whose email has not been delivered yet
+    if (b.action === "pending") {
+      const list = rows.filter(function (r) { return r.email && r.status !== "void" && norm_(r.emailed) !== "yes"; });
+      return out_({ tickets: list.slice(0, 50), total: list.length });
+    }
+
+    // Change the email address and/or delivery status of one ticket
+    if (b.action === "update") {
+      const idx = rows.findIndex(function (r) { return norm_(r.id) === norm_(b.id); });
+      if (idx < 0) return out_({ error: "ticket not found" });
+      ["email", "emailed"].forEach(function (f) {
+        if (b.fields && b.fields[f] != null) sheet_().getRange(idx + 2, COLS.indexOf(f) + 1).setValue(String(b.fields[f]));
+      });
       return out_({ ok: true });
     }
 

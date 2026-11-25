@@ -295,6 +295,21 @@ input:focus { border-color: var(--teal); background: rgba(255, 255, 255, 0.14); 
 .desk-tiers button.on span { color: rgba(255,255,255,0.85); }
 .desk-row { display: flex; gap: 10px; }
 .desk-row > * { flex: 1; }
+.desk-card .btn:disabled { opacity: 0.45; cursor: default; }
+.desk-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.desk-tabs { display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(255,255,255,0.07); }
+.desk-tabs button { background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; padding: 7px 14px; border-radius: 10px; cursor: pointer; }
+.desk-tabs button[aria-selected="true"] { background: rgba(255,255,255,0.16); color: var(--text); }
+.desk-box { display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); font-size: 14px; }
+.desk-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; font-size: 13px; overflow-wrap: anywhere; }
+.desk-search { display: flex; align-items: flex-end; gap: 8px; }
+.desk-search label { flex: 1; }
+.desk-search .btn { min-width: 72px; }
+.desk-tk { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.desk-pill { flex: none; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 12px; }
+.desk-pill.ok { background: rgba(20,184,166,0.22); color: #8ff0e0; }
+.desk-pill.bad { background: rgba(255,90,90,0.2); color: #ffd0d0; }
+.desk-ok { background: rgba(20,184,166,0.18); border: 1px solid rgba(20,184,166,0.5); color: #c9fbf2; padding: 10px 14px; border-radius: 12px; font-size: 14px; }
 .btn.desk-next { background: rgba(255,255,255,0.12); box-shadow: none; color: var(--text); }
 
 /* ============ Phone performance ============

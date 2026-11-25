@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { TIERS, EVENT, naira } from "@/lib/event";
+import Mail from "./Mail";
 
 const KEY = "hc-desk"; // passcode lives in this tab only, gone when the tab closes
 const blank = { tier: "regular", name: "", phone: "", email: "", school: "", amount: "3000" };
@@ -19,6 +20,7 @@ export default function Desk() {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [view, setView] = useState("sale");
   const t = TIERS.find((x) => x.id === f.tier);
 
   useEffect(() => {
@@ -92,7 +94,7 @@ export default function Desk() {
         <small className="muted">Ticket issued</small>
         <h1 className="desk-h">{done.name}</h1>
         <p className="muted small">{done.tier} · <b className="desk-id">{done.id}</b></p>
-        <p className="small">{done.emailed ? "The ticket was also emailed to them." : "No email sent. Send the link on WhatsApp instead."}</p>
+        <p className="small">{done.emailed ? "The ticket was also emailed to them." : done.emailError ? "The email didn't go through. Send the link on WhatsApp, or retry it from the Emails tab." : "No email sent. Send the link on WhatsApp instead."}</p>
         <a className="btn full" href={`https://wa.me/${intl(done.phone)}?text=${encodeURIComponent(msg)}`} target="_blank" rel="noopener">Send on WhatsApp</a>
         <div className="desk-row">
           <a className="glass btn-glass" href={`/t/${done.id}`} target="_blank" rel="noopener">Open ticket</a>
@@ -103,15 +105,22 @@ export default function Desk() {
     );
   }
 
+  const tabs = (
+    <div className="desk-top">
+      <div className="desk-tabs" role="tablist">
+        <button type="button" role="tab" aria-selected={view === "sale"} onClick={() => { setView("sale"); setErr(""); }}>Cash sale</button>
+        <button type="button" role="tab" aria-selected={view === "mail"} onClick={() => { setView("mail"); setErr(""); }}>Emails</button>
+      </div>
+      <button type="button" className="desk-lock" onClick={lock}>Lock</button>
+    </div>
+  );
+
+  if (view === "mail") return <div className="sheet glass desk-card">{tabs}<Mail call={call} /></div>;
+
   return (
     <form className="sheet glass desk-card" onSubmit={issue}>
-      <div className="sheet-head">
-        <div>
-          <small className="muted">Cash sale</small>
-          <h1 className="desk-h">Issue a ticket</h1>
-        </div>
-        <button type="button" className="desk-lock" onClick={lock}>Lock</button>
-      </div>
+      {tabs}
+      <h1 className="desk-h">Issue a ticket</h1>
 
       <div className="desk-tiers" role="radiogroup" aria-label="Ticket type">
         {TIERS.map((x) => (
