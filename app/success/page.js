@@ -14,8 +14,8 @@ export default async function Success({ searchParams }) {
     // issueTicket returns the existing ticket if the webhook already saved it, otherwise
     // verifies with Paystack and saves it now. The Sheet script dedupes, so no waiting needed.
     const h = await headers();
-    const origin = process.env.SITE_URL || `https://${h.get("host")}`;
-    ticket = await issueTicket(reference, origin.startsWith("http") ? origin : siteUrl());
+    const origin = (process.env.SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL) ? siteUrl() : `https://${h.get("host")}`;
+    ticket = await issueTicket(reference, origin);
   } catch (e) {
     console.error(e);
   }

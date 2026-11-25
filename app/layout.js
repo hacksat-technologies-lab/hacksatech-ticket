@@ -1,11 +1,10 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { siteUrl } from "@/lib/site";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700", "800"], display: "swap" });
 
-const base =
-  process.env.SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
+const base = siteUrl();
 const share = { url: "/og.jpg", width: 1200, height: 630, alt: "Hacksat" };
 
 export const metadata = {
